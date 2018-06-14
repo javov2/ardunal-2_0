@@ -4,8 +4,8 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
-
 #define DHTTYPE DHT22 
+
 
 const int sensorPin = A0; int sensorValue = 0; float sensorVoltage = 0; float windSpeed = 0; float voltageMax = 2.0;
 
@@ -17,17 +17,18 @@ DHT dht(DHTPin, DHTTYPE);
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 const char Matrix[4][4]={{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','<','>'}};
-const byte pinFila[4]={4,5,6,7}; //Pines del arduino para filas
-const byte pinColu[4]={11,10,9,8}; //Pines del arduino para columnas
+const byte pinFila[4]={11,10,9,8}; //Pines del arduino para filas
+const byte pinColu[4]={7,6,5,4}; //Pines del arduino para columnas
 Keypad Teclado = Keypad(makeKeymap(Matrix),pinFila,pinColu,4,4); //Preprogramación del teclado
 
 //const int sensorPin = A0; // Experimental
 
-void setup() {lcd.begin(); lcd.noBacklight();}
+void setup() { lcd.begin(); lcd.noBacklight(); Serial.begin(9600);}
 
 bool Screen = false; 
 int SenseTime=0;
 int SaveTime=0;
+bool SDStatus = true;
 
 
 void loop() {
@@ -54,7 +55,7 @@ while (Screen){
   //*             1. VER DATOS                   *//
   
   while (ActInt == 10 && Screen == true){  
-  iMenuVerDatos(); char KeyP = Teclado.getKey();
+  iMenuVerDatos(); char KeyP = Teclado.getKey(); /*Serial.println(KeyP);*/
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
 
   while (ActInt == 11 && Screen == true){  // TEMPERATURA
@@ -91,7 +92,7 @@ while (Screen){
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
 
   while (ActInt == 21 && Screen == true){  // CONECTAR USB
-  SDExist(Screen); char KeyP = Teclado.getKey();
+  SDExist(SDStatus); char KeyP = Teclado.getKey();
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}} // Experimental
 
 
@@ -129,5 +130,10 @@ while (Screen){
   while (ActInt == 40 && Screen == true) { 
   iMenuFabricante(); char KeyP = Teclado.getKey();
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
+
+  while (ActInt == 41 && Screen == true) {
+  Fabricantes(); char KeyP = Teclado.getKey();
+  if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
+  
   }
   }

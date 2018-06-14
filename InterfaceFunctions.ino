@@ -342,18 +342,38 @@ int ChangeInterface(int IntAct, char Tecla){
   //*             4. FABRICANTE                  *//
   
   if (IntAct == 40){ 
-    if (Tecla == '>'){ IntAct=10; lcd.clear(); return(IntAct);}
+    if (Tecla == '>'){ IntAct=10;        lcd.clear(); return(IntAct);}
+    if (Tecla == 'A'){ IntAct=40;        lcd.clear(); return(IntAct);}        // VOLVER
     if (Tecla == '<'){ IntAct=IntAct-10; lcd.clear(); return(IntAct);}
     if (Tecla == 'C'){ IntAct=41;        lcd.clear(); return(IntAct);}
     }
+
+  if (IntAct == 41){
+    if (Tecla == 'A'){ IntAct=40;        lcd.clear(); return(IntAct);}        // VOLVER
+    if (Tecla == 'C'){ IntAct=40;        lcd.clear(); return(IntAct);}        // OK
+    if (Tecla == '>'){ IntAct=41;        lcd.clear(); return(IntAct);}
+    if (Tecla == '<'){ IntAct=41;        lcd.clear(); return(IntAct);}            
+    }  
 
   }
 
 void SDExist(bool SDStatus){
 
-  lcd.setCursor(0,0); lcd.print("TARJETA SD");
-  lcd.setCursor(0,1); lcd.print(SDStatus);
-   
+  lcd.setCursor(0,0); lcd.print("   TARJETA SD   ");
+  lcd.createChar(0,iconConfi);
+  if (SDStatus){
+     lcd.setCursor(0,1); lcd.print("  GUARDANDO   ");
+     lcd.setCursor(13,1); lcd.write(0);
+     lcd.setCursor(15,1); lcd.print(" ");
+    }
+  else 
+  lcd.setCursor(0,1); lcd.print("NO ENCONTRADA X");
+    
 }
+
+void Fabricantes(){
+  lcd.setCursor(0,0); lcd.print("-  UNAL Palmira");
+  lcd.setCursor(0,1); lcd.print("-  PUJ Cali    ");
+  }
 
 
