@@ -27,3 +27,9 @@ float medirHumedad() {
   if (isnan(h)){ return 150; }
   return h; }
 
+float medirRadiacion(){ 
+  float sensorValue = analogRead(A7);
+  float sensorVoltagemilis = sensorValue * 0.004882814*1000;
+  float Radi=sensorVoltagemilis/1.67;
+  return Radi;
+  }

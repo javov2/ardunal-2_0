@@ -23,7 +23,7 @@ Keypad Teclado = Keypad(makeKeymap(Matrix),pinFila,pinColu,4,4); //Preprogramaci
 
 //const int sensorPin = A0; // Experimental
 
-void setup() { lcd.begin(); lcd.noBacklight(); Serial.begin(9600);}
+void setup() { lcd.begin(); lcd.noBacklight(); }
 
 bool Screen = false; 
 int SenseTime=0;
@@ -69,7 +69,8 @@ while (Screen){
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
 
   while (ActInt == 13 && Screen == true){  // RAD. SOLAR
-  iRadSolar(r1); char KeyP = Teclado.getKey();
+  float Radiacion = medirRadiacion();
+  iRadSolar(Radiacion); char KeyP = Teclado.getKey();
   if (KeyP){Screen = ApagarPantalla(KeyP); ActInt=ChangeInterface(ActInt,KeyP);}}
 
   while (ActInt == 14 && Screen == true){  // V. VIENTO
